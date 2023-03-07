@@ -1,17 +1,18 @@
 package com.company;
 
-import java.util.Random;
-import java.util.Scanner;
+import com.company.def.Questions;
+import com.company.func.TestUtil;
+
+import java.util.*;
 
 public class Main {
     private static final Random rand = new Random();
 
     public static void main(String[] args) {
         System.out.println("题目：\n");
-        System.out.println("Q1：" + Questions.title1);
-        System.out.println("Q2：" + Questions.title2);
-        System.out.println("Q3：" + Questions.title3);
-        System.out.println("Q4：" + Questions.title4);
+        for (int index = 1; index < 5; index++) {
+            System.out.println("Q" + (index + 1) + "：" + Questions.getTitle(index));
+        }
 
         Scanner scan = new Scanner(System.in);
         System.out.println("请选择模式：\n");

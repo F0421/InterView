@@ -1,11 +1,12 @@
-package com.company;
+package com.company.func;
 
-public class Solutions {
-    public static int applePrice = 8;
-    public static int strawberryPrice = 13;
-    public static int mangoPrice = 20;
-    public static double discount = 0.8;
+import com.company.def.PriceDef;
 
+public class CalcUtil {
+
+    static int applePrice = PriceDef.getPrice("apple");
+    static int strawberryPrice = PriceDef.getPrice("strawberry");
+    static int mangoPrice = PriceDef.getPrice("mango");
 
     public static int calculatePrice(int appleNum, int strawberryNum) {
         if (strawberryNum < 0 || appleNum < 0) {
@@ -22,14 +23,13 @@ public class Solutions {
         return (applePrice * appleNum + strawberryPrice * strawberryNum + mangoPrice * mangoNum);
     }
 
-    public static double calculateDiscountPrice(int appleNum, int strawberryNum, int mangoNum) {
-        double price = calculatePrice(appleNum, strawberryNum, mangoNum) * discount;
-        return Math.round(price * 100) / 100.0;
+    public static int calculateDiscountPrice(int appleNum, int strawberryNum, int mangoNum) {
+        return calculatePrice(appleNum, strawberryNum, mangoNum) * 10000 / 8000;
     }
 
-    public static double calculateLowerPrice(int appleNum, int strawberryNum, int mangoNum) {
-        double totalPrice = calculateDiscountPrice(appleNum, strawberryNum, mangoNum);
-        return totalPrice - Math.floor(totalPrice / 100) * 10;
+    public static int calculateLowerPrice(int appleNum, int strawberryNum, int mangoNum) {
+        int totalPrice = calculateDiscountPrice(appleNum, strawberryNum, mangoNum);
+        return totalPrice - totalPrice / 10000 * 1000;
     }
 
 
