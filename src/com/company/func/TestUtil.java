@@ -2,6 +2,8 @@ package com.company.func;
 
 import com.company.def.PriceDef;
 
+import static com.company.func.YuanUtil.ToYuan;
+
 public class TestUtil {
     public static int aNum = 0;
     public static int sNum = 0;
@@ -19,11 +21,11 @@ public class TestUtil {
 
     private static void test1(int appleNum, int strawberryNum) {
         System.out.print("A1:");
-        int totalPrice = 0;
+        double totalPrice = 0;
         try {
             totalPrice = CalcUtil.calculatePrice(appleNum, strawberryNum);
-            System.out.println("成功：购买的水果总价为：" + YuanUtil.ToYuan(totalPrice));
-            System.out.println(getNote1() + "=" + YuanUtil.ToYuan(totalPrice).replaceAll("￥", "") + "元\n");
+            System.out.println("成功：购买的水果总价为:￥" + ToYuan(totalPrice));
+            System.out.println(getNote1() + " = " + ToYuan(totalPrice) + "元\n");
         } catch (Exception e) {
             System.out.println("失败：" + e.getMessage() + "\n");
         }
@@ -31,12 +33,11 @@ public class TestUtil {
 
     private static void test2(int appleNum, int strawberryNum, int mangoNum) {
         System.out.print("A2:");
-        int totalPrice = 0;
-
+        double totalPrice = 0;
         try {
             totalPrice = CalcUtil.calculatePrice(appleNum, strawberryNum, mangoNum);
-            System.out.println("成功：购买的水果总价为：" + YuanUtil.ToYuan(totalPrice));
-            System.out.println(getNote2() + "=" + YuanUtil.ToYuan(totalPrice).replaceAll("￥", "") + "元\n");
+            System.out.println("成功：购买的水果总价为:￥" + ToYuan(totalPrice));
+            System.out.println(getNote2() + " = " + ToYuan(totalPrice) + "元\n");
         } catch (Exception e) {
             System.out.println("失败：" + e.getMessage() + "\n");
         }
@@ -44,11 +45,11 @@ public class TestUtil {
 
     private static void test3(int appleNum, int strawberryNum, int mangoNum) {
         System.out.print("A3:");
-        int totalPrice = 0;
+        double totalPrice = 0;
         try {
             totalPrice = CalcUtil.calculateDiscountPrice(appleNum, strawberryNum, mangoNum);
-            System.out.println("成功：购买的水果总价为：" + YuanUtil.ToYuan(totalPrice));
-            System.out.println(getNote3() + "=" + YuanUtil.ToYuan(totalPrice).replaceAll("￥", "") + "元\n");
+            System.out.println("成功：购买的水果总价为:￥" + ToYuan(totalPrice));
+            System.out.println(getNote3() + " = " + ToYuan(totalPrice) + "元\n");
         } catch (Exception e) {
             System.out.println("失败：" + e.getMessage() + "\n");
         }
@@ -56,35 +57,39 @@ public class TestUtil {
 
     private static void test4(int appleNum, int strawberryNum, int mangoNum) {
         System.out.print("A4:");
-        int totalPrice = 0;
+        double totalPrice = 0;
         try {
             totalPrice = CalcUtil.calculateLowerPrice(appleNum, strawberryNum, mangoNum);
-            System.out.println("成功：购买的水果总价为：" + YuanUtil.ToYuan(totalPrice));
-            System.out.println(getNote4(totalPrice * 100 / 10000 / 100) + "=" + YuanUtil.ToYuan(totalPrice).replaceAll("￥", "") + "元\n");
+            System.out.println("成功：购买的水果总价为:￥" + ToYuan(totalPrice));
+            System.out.println(getNote4(Math.floor(totalPrice / 10000) * 1000) + " = " + ToYuan(totalPrice) + "元\n");
         } catch (Exception e) {
             System.out.println("失败：" + e.getMessage() + "\n");
         }
     }
 
-    static int aPrice = PriceDef.getPrice("apple") * 100 / 10000;
-    static int sPrice = PriceDef.getPrice("strawberry") * 100 / 10000;
-    static int mPrice = PriceDef.getPrice("mango") * 100 / 10000;
+    static double aPrice = PriceDef.getPrice("apple") * 100 / 10000;
+    static double sPrice = PriceDef.getPrice("strawberry") * 100 / 10000;
+    static double mPrice = PriceDef.getPrice("mango") * 100 / 10000;
 
     private static String getNote1() {
-        return aPrice + "*" + aNum + "+" +
+        String note = aPrice + "*" + aNum + "+" +
                 sPrice + "*" + sNum + "\n";
+        return note.trim();
     }
 
     private static String getNote2() {
-        return getNote1() + "+" +
-                mPrice + "*" + mNum ;
+        String note = getNote1() + "+" +
+                mPrice + "*" + mNum;
+        return note.trim();
     }
 
     private static String getNote3() {
-        return "(" + getNote2() + ") * 0.8" ;
+        String note = "(" + getNote2() + ") * 0.8";
+        return note.trim();
     }
 
-    private static String getNote4(int cut) {
-        return getNote3() + "- " + cut + "0";
+    private static String getNote4(double cut) {
+        String note = getNote3() + " - " + ToYuan(cut);
+        return note.trim();
     }
 }
